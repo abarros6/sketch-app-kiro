@@ -1,0 +1,14 @@
+# Ultra-simple Dockerfile using Python HTTP server
+FROM python:3.11-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy application files
+COPY index.html app.js styles.css ./
+
+# Expose port 8000
+EXPOSE 8000
+
+# Start simple HTTP server
+CMD ["python", "-m", "http.server", "8000"]
