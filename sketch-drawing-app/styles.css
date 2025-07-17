@@ -1,0 +1,173 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f5f5f5;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Toolbar styles */
+.toolbar {
+    background: white;
+    padding: 15px 20px;
+    border-bottom: 2px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.toolbar h1 {
+    color: #333;
+    font-size: 24px;
+    margin-right: 30px;
+}
+
+.tool-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tool-group label {
+    font-weight: 500;
+    color: #555;
+    font-size: 14px;
+}
+
+/* Form controls */
+select, button {
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+select:hover, button:hover:not(:disabled) {
+    border-color: #007bff;
+}
+
+select:focus, button:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+button {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+    font-weight: 500;
+}
+
+button:hover:not(:disabled) {
+    background: #0056b3;
+    border-color: #0056b3;
+}
+
+button:disabled {
+    background: #6c757d;
+    border-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+#colorPicker {
+    width: 50px;
+    height: 35px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 2px;
+}
+
+#colorPicker:hover {
+    border-color: #007bff;
+}
+
+/* Canvas container */
+.canvas-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: #f8f9fa;
+}
+
+#drawingCanvas {
+    border: 3px solid #dee2e6;
+    border-radius: 8px;
+    background: white;
+    cursor: crosshair;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
+}
+
+#drawingCanvas:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#drawingCanvas.select-mode {
+    cursor: pointer;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .toolbar h1 {
+        margin-right: 0;
+        text-align: center;
+    }
+    
+    .tool-group {
+        justify-content: center;
+    }
+    
+    #drawingCanvas {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+    }
+    
+    .canvas-container {
+        padding: 10px;
+    }
+}
+
+/* Selection indicators */
+.selection-handle {
+    fill: #007bff;
+    stroke: white;
+    stroke-width: 1;
+}
+
+.selection-outline {
+    stroke: #007bff;
+    stroke-width: 2;
+    stroke-dasharray: 5,5;
+    fill: none;
+}
