@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This feature implements a comprehensive 2D sketch drawing application that allows users to create, manipulate, and manage graphical objects on a digital canvas. The application provides multiple drawing modes, color selection, object manipulation capabilities, and standard editing functions like undo/redo. The application will be containerized using Docker for easy deployment and consistent runtime environment.
+This document outlines the requirements for a simple sketch drawing program implemented using vanilla JavaScript, HTML5 Canvas, CSS, and Docker. Based on the original assignment specification, the application provides a 2D drawing space with multiple drawing modes, color selection, object manipulation capabilities, and advanced features like grouping, undo/redo, and save/load functionality. The program is designed to be platform-independent and runs in a web browser through a Docker container with nginx serving static files.
 
 ## Requirements
 
@@ -38,6 +38,7 @@ This feature implements a comprehensive 2D sketch drawing application that allow
 2. WHEN the user selects closed polygon mode THEN the system SHALL automatically connect the last point to the first point
 3. WHEN the user double-clicks or presses Enter THEN the system SHALL complete the polygon drawing
 4. WHEN drawing a polygon THEN the system SHALL provide visual feedback showing the current polygon state
+5. WHEN the user clicks to add polygon points THEN the system SHALL show preview lines to the current mouse position
 
 ### Requirement 4
 
