@@ -38,7 +38,7 @@
   - Create preview shape rendering for real-time drawing feedback
   - _Requirements: 1.1, 1.2, 2.1, 2.2, 2.3, 2.4, 2.5, 7.1_
 
-- [x] 6. Implement mouse event handling for drawing operations
+- [ ] 6. Implement mouse event handling for drawing operations
   - Add startDrawing method to handle mousedown events
   - Implement continueDrawing method for mousemove events during drawing
   - Add finishDrawing method for mouseup events to complete shapes
