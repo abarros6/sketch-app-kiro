@@ -1,6 +1,6 @@
 # Sketch Drawing App
 
-**Author: Anthony Barros**
+**Author: Anthony Barros + kiro**
 
 A simple sketch drawing program built with vanilla JavaScript, HTML5 Canvas, and CSS. The application provides a 2D drawing space with multiple drawing modes, color selection, object manipulation capabilities, and advanced features like grouping, undo/redo, and save/load functionality.
 
@@ -235,5 +235,7 @@ If you encounter issues:
 ---
 
 ## About Kiro
+
+This project was created as an introduction to the kiro text editor. 
 
 This project was developed using **Kiro**, an AI-powered development assistant that helps transform ideas into fully functional applications through spec-driven development. Kiro guided the entire development process from initial requirements gathering through final implementation, demonstrating the power of AI-assisted software development.

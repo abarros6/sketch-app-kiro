@@ -1,6 +1,6 @@
 # Sketch Drawing App - Architecture Documentation
 
-**Author: Anthony Barros**
+**Author: Anthony Barros + Kiro**
 
 This document provides comprehensive technical information about the Sketch Drawing App architecture, interactive functions, and design patterns to enable the creation of statecharts and object diagrams.
 
