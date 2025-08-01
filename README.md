@@ -1,117 +1,6 @@
 # Sketch Drawing App
 
-A feature-rich 2D sketch drawing application built with vanilla JavaScript,
-HTML, and CSS. This project demonstrates the power of spec-driven development
-using Kiro's AI-assisted workflow.
-
-## Features
-
-- **Multiple Drawing Modes**: Freehand, Line, Rectangle, Square, Ellipse, Circle
-- **Object Selection**: Select and manipulate drawn objects
-- **Color Picker**: Choose any color for your drawings
-- **Undo/Redo**: Full command history with keyboard shortcuts (Ctrl+Z/Ctrl+Y)
-- **Object Deletion**: Delete selected objects with the Delete key
-- **Responsive Design**: Works on desktop and mobile devices
-- **Docker Support**: Easy deployment with containerization
-
-## How It Was Built
-
-This project was developed using **Kiro's spec-driven development process**:
-
-### 1. Requirements Gathering
-
-- Started with a rough idea: "Create a sketch drawing program with basic shapes
-  and selection"
-- Kiro helped transform this into detailed requirements with user stories and
-  acceptance criteria
-- Added grouping and save/load functionality based on user feedback
-
-### 2. Design Phase
-
-- Created comprehensive technical design with architecture diagrams
-- Defined data models, component interfaces, and error handling strategies
-- Planned Docker containerization approach
-
-### 3. Implementation Planning
-
-- Generated 22 detailed implementation tasks
-- Each task included specific coding objectives and requirement references
-- Tasks were designed to build incrementally with proper testing
-
-### 4. Iterative Development
-
-- Initially started with React + TypeScript but encountered compatibility issues
-- Pivoted to vanilla JavaScript for simplicity and reliability
-- Kiro adapted the implementation to maintain all planned features
-
-## Technology Stack
-
-- **Frontend**: Vanilla JavaScript (ES6+)
-- **Styling**: Pure CSS with responsive design
-- **Containerization**: Docker with Nginx
-- **Architecture**: Object-oriented design with command pattern for undo/redo
-
-## Quick Start
-
-### Using Docker (Recommended)
-
-```bash
-# Build the container
-docker build -t sketch-app .
-
-# Run the application
-docker run -p 3000:80 sketch-app
-```
-
-Then open http://localhost:3000 in your browser.
-
-### Local Development
-
-Simply open `index.html` in your web browser - no build process required!
-
-## Usage
-
-1. **Select Drawing Mode**: Choose from freehand, geometric shapes, polygons, or
-   selection mode
-2. **Pick a Color**: Use the color picker to set your drawing color
-3. **Draw Shapes**: Click and drag on the canvas to create shapes
-4. **Draw Polygons**: Click points in sequence, double-click to finish
-5. **Select Objects**: Click individual objects or drag a selection box around
-   multiple objects
-6. **Manipulate Objects**: Copy (Ctrl+C), Paste (Ctrl+V), Delete, and move
-   selected objects
-7. **Undo/Redo**: Use Ctrl+Z and Ctrl+Y or the toolbar buttons
-
-## Drawing Modes
-
-- **Freehand**: Click and drag to draw freely
-- **Line**: Click and drag to draw straight lines
-- **Rectangle**: Click and drag to draw rectangles
-- **Square**: Click and drag to draw perfect squares
-- **Ellipse**: Click and drag to draw ellipses
-- **Circle**: Click and drag to draw perfect circles
-- **Open Polygon**: Click points in sequence, double-click to finish open shape
-- **Closed Polygon**: Click points in sequence, double-click to close shape
-- **Select**: Click objects or drag selection box to select multiple objects
-
-## Keyboard Shortcuts
-
-- `Ctrl + Z`: Undo
-- `Ctrl + Y`: Redo
-- `Ctrl + C`: Copy selected objects
-- `Ctrl + V`: Paste copied objects
-- `Delete`: Remove selected objects
-
-## Project Structure
-
-```
-sketch-drawing-app/
-├── index.html          # Main HTML file
-├── app.js             # Core application logic
-├── styles.css         # Styling and responsive design
-├── Dockerfile.dev     # Development container
-├── nginx.conf         # Nginx configuration
-└── # Sketch Drawing App
+**Author: Anthony Barros**
 
 A simple sketch drawing program built with vanilla JavaScript, HTML5 Canvas, and CSS. The application provides a 2D drawing space with multiple drawing modes, color selection, object manipulation capabilities, and advanced features like grouping, undo/redo, and save/load functionality.
 
@@ -308,6 +197,10 @@ This project fulfills the requirements for a simple sketch drawing program inclu
 ✅ Undo and redo operations  
 ✅ Save and load functionality for drawings  
 
+## Author
+
+**Anthony Barros** - Software Developer
+
 ## License
 
 This project is created for educational purposes as part of a software design assignment.
@@ -337,26 +230,10 @@ If you encounter issues:
 1. Check the browser console for error messages
 2. Verify all files are present and accessible
 3. Test in a different browser
-4. Check Docker logs if using containerized version          # This file
-```
-
-## The Kiro Advantage
-
-This project showcases how Kiro's AI-assisted development process enables:
-
-- **Rapid Prototyping**: From idea to working application in hours
-- **Comprehensive Planning**: Detailed specs prevent scope creep and missed
-  requirements
-- **Adaptive Development**: Ability to pivot technologies while maintaining
-  feature completeness
-- **Quality Assurance**: Built-in error handling and user experience
-  considerations
-- **Documentation**: Auto-generated specs serve as living documentation
-
-The entire development process was guided by AI, from requirements gathering
-through implementation, demonstrating the future of collaborative human-AI
-software development.
+4. Check Docker logs if using containerized version
 
 ---
 
-_Built with ❤️ using Kiro's spec-driven development workflow_
+## About Kiro
+
+This project was developed using **Kiro**, an AI-powered development assistant that helps transform ideas into fully functional applications through spec-driven development. Kiro guided the entire development process from initial requirements gathering through final implementation, demonstrating the power of AI-assisted software development.
