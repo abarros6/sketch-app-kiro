@@ -67,6 +67,10 @@ class DrawableObject {
         context.strokeRect(this.bounds.x - 2, this.bounds.y - 2, this.bounds.width + 4, this.bounds.height + 4);
         context.setLineDash([]);
     }
+
+    changeColor(newColor) {
+        this.color = newColor;
+    }
 }
 
 // Freehand path class
@@ -484,6 +488,18 @@ class Group extends DrawableObject {
         this.bounds = this.calculateGroupBounds();
     }
 
+    changeColor(newColor) {
+        // Change color of all grouped objects
+        this.color = newColor;
+        this.groupedObjects.forEach(obj => {
+            if (obj.type === ObjectType.GROUP) {
+                obj.changeColor(newColor);
+            } else {
+                obj.color = newColor;
+            }
+        });
+    }
+
     clone() {
         const clonedObjects = this.groupedObjects.map(obj => obj.clone());
         return new Group(clonedObjects, this.color);
@@ -531,6 +547,10 @@ class SketchApp {
         // Color picker
         document.getElementById('colorPicker').addEventListener('change', (e) => {
             this.currentColor = e.target.value;
+            // If objects are selected, automatically change their color
+            if (this.selectedObjects.length > 0) {
+                this.changeSelectedColor();
+            }
         });
 
         // Clear canvas button
@@ -583,6 +603,11 @@ class SketchApp {
             this.loadSketch();
         });
 
+        // Change color button
+        document.getElementById('changeColorBtn').addEventListener('click', () => {
+            this.changeSelectedColor();
+        });
+
         // Canvas mouse events
         this.canvas.addEventListener('mousedown', (e) => this.handleMouseDown(e));
         this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
@@ -622,6 +647,9 @@ class SketchApp {
             } else if (e.ctrlKey && e.key === 'o') {
                 e.preventDefault();
                 this.loadSketch();
+            } else if (e.ctrlKey && e.key === 'r') {
+                e.preventDefault();
+                this.changeSelectedColor();
             } else if (e.key === 'Delete' && this.selectedObjects.length > 0) {
                 this.deleteSelected();
             } else if (e.key === 'Escape') {
@@ -879,9 +907,35 @@ class SketchApp {
         document.getElementById('copyBtn').disabled = this.selectedObjects.length === 0;
         document.getElementById('pasteBtn').disabled = this.copiedObjects.length === 0;
         document.getElementById('deleteBtn').disabled = this.selectedObjects.length === 0;
+        document.getElementById('changeColorBtn').disabled = this.selectedObjects.length === 0;
         document.getElementById('groupBtn').disabled = this.selectedObjects.length < 2;
         document.getElementById('ungroupBtn').disabled = 
             this.selectedObjects.length !== 1 || this.selectedObjects[0].type !== ObjectType.GROUP;
+        
+        // Update selection counter
+        this.updateSelectionInfo();
+    }
+
+    updateSelectionInfo() {
+        const selectionInfo = document.getElementById('selectionInfo');
+        const selectionCount = document.getElementById('selectionCount');
+        
+        if (this.selectedObjects.length > 0) {
+            let text = `${this.selectedObjects.length} object${this.selectedObjects.length > 1 ? 's' : ''} selected`;
+            
+            if (this.selectedObjects.length > 1) {
+                text += ' • Ctrl+G to group';
+            } else if (this.selectedObjects[0].type === ObjectType.GROUP) {
+                text += ' • Group • Ctrl+Shift+G to ungroup';
+            } else {
+                text += ' • Drag to move • Change color';
+            }
+            
+            selectionCount.textContent = text;
+            selectionInfo.classList.add('visible');
+        } else {
+            selectionInfo.classList.remove('visible');
+        }
     }
 
     // Polygon drawing methods
@@ -1231,6 +1285,235 @@ class SketchApp {
                 this.context.arc(point.x, point.y, 3, 0, 2 * Math.PI);
                 this.context.fill();
             });
+        }
+    }
+
+    // Color change functionality
+    changeSelectedColor() {
+        if (this.selectedObjects.length > 0) {
+            // Use the current color from the color picker
+            const newColor = this.currentColor;
+            
+            this.saveState();
+            
+            this.selectedObjects.forEach(obj => {
+                if (obj.type === ObjectType.GROUP) {
+                    obj.changeColor(newColor);
+                } else {
+                    obj.color = newColor;
+                }
+            });
+            
+            this.render();
+            this.updateButtons();
+        }
+    }
+
+    // Copy/Paste functionality
+    copySelected() {
+        if (this.selectedObjects.length > 0) {
+            this.copiedObjects = this.selectedObjects.map(obj => obj.clone());
+            this.updateButtons();
+        }
+    }
+
+    pasteObjects() {
+        if (this.copiedObjects.length > 0) {
+            this.saveState();
+            this.clearSelection();
+            
+            // Paste with slight offset
+            const offset = { x: 20, y: 20 };
+            this.copiedObjects.forEach(obj => {
+                const newObj = obj.clone();
+                newObj.move(offset);
+                newObj.isSelected = true;
+                this.objects.push(newObj);
+                this.selectedObjects.push(newObj);
+            });
+            
+            this.render();
+            this.updateButtons();
+        }
+    }
+
+    // Grouping functionality
+    groupSelected() {
+        if (this.selectedObjects.length >= 2) {
+            this.saveState();
+            
+            // Remove selected objects from main objects array
+            this.selectedObjects.forEach(obj => {
+                const index = this.objects.indexOf(obj);
+                if (index > -1) {
+                    this.objects.splice(index, 1);
+                }
+            });
+            
+            // Create group
+            const group = new Group(this.selectedObjects);
+            group.isSelected = true;
+            this.objects.push(group);
+            
+            // Update selection
+            this.selectedObjects = [group];
+            
+            this.render();
+            this.updateButtons();
+        }
+    }
+
+    ungroupSelected() {
+        if (this.selectedObjects.length === 1 && this.selectedObjects[0].type === ObjectType.GROUP) {
+            this.saveState();
+            
+            const group = this.selectedObjects[0];
+            const index = this.objects.indexOf(group);
+            
+            if (index > -1) {
+                // Remove group from objects
+                this.objects.splice(index, 1);
+                
+                // Add individual objects back
+                group.groupedObjects.forEach(obj => {
+                    obj.isSelected = true;
+                    this.objects.push(obj);
+                });
+                
+                // Update selection to individual objects
+                this.selectedObjects = [...group.groupedObjects];
+            }
+            
+            this.render();
+            this.updateButtons();
+        }
+    }
+
+    // Save/Load functionality
+    saveSketch() {
+        const sketchName = prompt('Enter sketch name:', 'My Sketch');
+        if (sketchName) {
+            const sketchData = {
+                version: '1.0',
+                objects: this.objects.map(obj => this.serializeObject(obj)),
+                metadata: {
+                    createdAt: new Date().toISOString(),
+                    modifiedAt: new Date().toISOString(),
+                    name: sketchName
+                }
+            };
+            
+            try {
+                localStorage.setItem(`sketch_${sketchName}`, JSON.stringify(sketchData));
+                alert(`Sketch "${sketchName}" saved successfully!`);
+            } catch (error) {
+                alert('Error saving sketch: ' + error.message);
+            }
+        }
+    }
+
+    loadSketch() {
+        // Get list of saved sketches
+        const savedSketches = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('sketch_')) {
+                savedSketches.push(key.substring(7)); // Remove 'sketch_' prefix
+            }
+        }
+        
+        if (savedSketches.length === 0) {
+            alert('No saved sketches found.');
+            return;
+        }
+        
+        const sketchName = prompt(`Available sketches:\n${savedSketches.join('\n')}\n\nEnter sketch name to load:`);
+        if (sketchName && savedSketches.includes(sketchName)) {
+            try {
+                const sketchData = JSON.parse(localStorage.getItem(`sketch_${sketchName}`));
+                
+                // Clear current drawing
+                this.objects = [];
+                this.selectedObjects = [];
+                this.undoStack = [];
+                this.redoStack = [];
+                
+                // Load objects
+                this.objects = sketchData.objects.map(objData => this.deserializeObject(objData)).filter(obj => obj !== null);
+                
+                this.render();
+                this.updateButtons();
+                alert(`Sketch "${sketchName}" loaded successfully!`);
+            } catch (error) {
+                alert('Error loading sketch: ' + error.message);
+            }
+        }
+    }
+
+    // Serialization methods
+    serializeObject(obj) {
+        const baseData = {
+            id: obj.id,
+            type: obj.type,
+            points: obj.points,
+            color: obj.color,
+            isSelected: obj.isSelected
+        };
+
+        // Add type-specific properties
+        switch (obj.type) {
+            case ObjectType.RECTANGLE:
+                baseData.isSquare = obj.isSquare;
+                break;
+            case ObjectType.ELLIPSE:
+                baseData.isCircle = obj.isCircle;
+                break;
+            case ObjectType.POLYGON:
+                baseData.isClosed = obj.isClosed;
+                break;
+            case ObjectType.GROUP:
+                baseData.groupedObjects = obj.groupedObjects.map(groupedObj => this.serializeObject(groupedObj));
+                break;
+        }
+
+        return baseData;
+    }
+
+    deserializeObject(objData) {
+        try {
+            let obj = null;
+
+            switch (objData.type) {
+                case ObjectType.FREEHAND_PATH:
+                    obj = new FreehandPath(objData.points, objData.color);
+                    break;
+                case ObjectType.LINE:
+                    obj = new Line(objData.points[0], objData.points[1], objData.color);
+                    break;
+                case ObjectType.RECTANGLE:
+                    obj = new Rectangle(objData.points[0], objData.points[1], objData.color, objData.isSquare);
+                    break;
+                case ObjectType.ELLIPSE:
+                    obj = new Ellipse(objData.points[0], objData.points[1], objData.color, objData.isCircle);
+                    break;
+                case ObjectType.POLYGON:
+                    obj = new Polygon(objData.points, objData.color, objData.isClosed);
+                    break;
+                case ObjectType.GROUP:
+                    const groupedObjects = objData.groupedObjects.map(groupedObjData => this.deserializeObject(groupedObjData)).filter(o => o !== null);
+                    obj = new Group(groupedObjects, objData.color);
+                    break;
+            }
+
+            if (obj) {
+                obj.id = objData.id;
+                obj.isSelected = objData.isSelected || false;
+            }
+
+            return obj;
+        } catch (error) {
+            console.error('Error deserializing object:', error);
+            return null;
         }
     }
 }

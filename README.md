@@ -126,12 +126,14 @@ A simple sketch drawing program built with vanilla JavaScript, HTML5 Canvas, and
 - **Select**: Select and manipulate existing objects
 
 ### Object Manipulation
-- Select objects by clicking on them
-- Move selected objects by dragging
-- Delete selected objects with Delete key or button
-- Copy and paste objects
-- Group multiple objects together
-- Ungroup grouped objects
+- **Single Selection**: Click on objects to select them
+- **Multi-Selection**: Hold Ctrl and click to select multiple objects
+- **Move Objects**: Drag selected objects to move them
+- **Change Colors**: Select objects and use color picker or Change Color button
+- **Delete Objects**: Use Delete key or button to remove selected objects
+- **Copy/Paste**: Copy selected objects with Ctrl+C, paste with Ctrl+V
+- **Group Objects**: Select multiple objects and use Group button or Ctrl+G
+- **Ungroup Objects**: Select a group and use Ungroup button or Ctrl+Shift+G
 
 ### Advanced Features
 - **Undo/Redo**: Full undo/redo functionality with Ctrl+Z and Ctrl+Y
@@ -220,10 +222,17 @@ You can also open `index.html` directly in your browser, though some features (l
 
 ### Object Manipulation
 1. Switch to "Select" mode
-2. Click on objects to select them (selected objects will be highlighted)
-3. Drag selected objects to move them
-4. Use Delete key or button to remove selected objects
-5. Use Ctrl+C and Ctrl+V to copy and paste objects
+2. **Single Selection**: Click on objects to select them (selected objects will be highlighted)
+3. **Multi-Selection**: Hold Ctrl and click on additional objects to select multiple items
+4. **Move Objects**: Drag selected objects to move them
+5. **Change Colors**: 
+   - Select objects and use the color picker to instantly change their color
+   - Or use the "Change Color" button or press Ctrl+R
+   - Works with individual objects, multiple objects, and groups
+6. **Group Objects**: Select multiple objects and click Group button or press Ctrl+G
+7. **Ungroup Objects**: Select a group and click Ungroup button or press Ctrl+Shift+G
+8. **Delete Objects**: Use Delete key or button to remove selected objects
+9. **Copy/Paste**: Use Ctrl+C and Ctrl+V to copy and paste objects
 
 ### Advanced Features
 - **Undo/Redo**: Use Ctrl+Z to undo, Ctrl+Y to redo
@@ -240,6 +249,7 @@ You can also open `index.html` directly in your browser, though some features (l
 - `Ctrl+V` - Paste copied objects
 - `Ctrl+G` - Group selected objects
 - `Ctrl+Shift+G` - Ungroup selected group
+- `Ctrl+R` - Change color of selected objects
 - `Ctrl+S` - Save current drawing
 - `Ctrl+O` - Load saved drawing
 

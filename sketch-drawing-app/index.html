@@ -13,7 +13,7 @@
             
             <div class="tool-group">
                 <label>Mode:</label>
-                <select id="drawingMode">
+                <select id="drawingMode" title="Select drawing mode">
                     <option value="freehand">Freehand</option>
                     <option value="line">Line</option>
                     <option value="rectangle">Rectangle</option>
@@ -22,40 +22,44 @@
                     <option value="circle">Circle</option>
                     <option value="open_polygon">Open Polygon</option>
                     <option value="closed_polygon">Closed Polygon</option>
-                    <option value="select">Select</option>
+                    <option value="select">Select (Ctrl+click for multiple)</option>
                 </select>
             </div>
 
             <div class="tool-group">
                 <label>Color:</label>
-                <input type="color" id="colorPicker" value="#000000">
+                <input type="color" id="colorPicker" value="#000000" title="Select color for new objects or change selected objects">
             </div>
 
             <div class="tool-group">
-                <button id="clearCanvas">Clear Canvas</button>
-                <button id="undoBtn" disabled>Undo</button>
-                <button id="redoBtn" disabled>Redo</button>
+                <button id="clearCanvas" title="Clear entire canvas">Clear Canvas</button>
+                <button id="undoBtn" disabled title="Undo last action (Ctrl+Z)">Undo</button>
+                <button id="redoBtn" disabled title="Redo last undone action (Ctrl+Y)">Redo</button>
             </div>
 
             <div class="tool-group">
-                <button id="copyBtn" disabled>Copy</button>
-                <button id="pasteBtn" disabled>Paste</button>
-                <button id="deleteBtn" disabled>Delete</button>
+                <button id="copyBtn" disabled title="Copy selected objects (Ctrl+C)">Copy</button>
+                <button id="pasteBtn" disabled title="Paste copied objects (Ctrl+V)">Paste</button>
+                <button id="deleteBtn" disabled title="Delete selected objects (Delete key)">Delete</button>
+                <button id="changeColorBtn" disabled title="Change color of selected objects (Ctrl+R)">Change Color</button>
             </div>
 
             <div class="tool-group">
-                <button id="groupBtn" disabled>Group</button>
-                <button id="ungroupBtn" disabled>Ungroup</button>
+                <button id="groupBtn" disabled title="Group selected objects (Ctrl+G)">Group</button>
+                <button id="ungroupBtn" disabled title="Ungroup selected group (Ctrl+Shift+G)">Ungroup</button>
             </div>
 
             <div class="tool-group">
-                <button id="saveBtn">Save</button>
-                <button id="loadBtn">Load</button>
+                <button id="saveBtn" title="Save current sketch (Ctrl+S)">Save</button>
+                <button id="loadBtn" title="Load saved sketch (Ctrl+O)">Load</button>
             </div>
         </div>
 
         <div class="canvas-container">
             <canvas id="drawingCanvas" width="800" height="600"></canvas>
+            <div id="selectionInfo" class="selection-info">
+                <span id="selectionCount">0 objects selected</span>
+            </div>
         </div>
     </div>
 
